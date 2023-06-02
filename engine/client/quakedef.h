@@ -266,15 +266,15 @@ extern "C" {
 		// MSVC 14 has standardized snprintf functions, hurrah!
 	#elif (_MSC_VER >= 1400)
 		//with MSVC 8, use microsoft's vsnprintf_s. return values are still wrong though.
-		#define snprintf (void)linuxlike_snprintf_vc8
+		#define snprintf linuxlike_snprintf_vc8
 		int VARGS linuxlike_snprintf_vc8(char *buffer, int size, const char *format, ...) LIKEPRINTF(3);
-		#define vsnprintf(a, b, c, d) (void)(vsnprintf_s(a, b, _TRUNCATE, c, d))
+		#define vsnprintf(a, b, c, d) (vsnprintf_s(a, b, _TRUNCATE, c, d))
 	#else
 		//msvc crap. return values are wrong but at least we can null terminate it safely.
-		#define snprintf (void)linuxlike_snprintf
-		int VARGS linuxlike_snprintf(char *buffer, int size, const char *format, ...) LIKEPRINTF(3);
-		#define vsnprintf (void)linuxlike_vsnprintf
-		int VARGS linuxlike_vsnprintf(char *buffer, int size, const char *format, va_list argptr);
+		// #define snprintf linuxlike_snprintf
+		// int VARGS linuxlike_snprintf(char *buffer, int size, const char *format, ...) LIKEPRINTF(3);
+		// #define vsnprintf linuxlike_vsnprintf
+		// int VARGS linuxlike_vsnprintf(char *buffer, int size, const char *format, va_list argptr);
 	#endif
 
 	#ifdef _MSC_VER

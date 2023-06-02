@@ -1440,11 +1440,11 @@ ifeq (win,$(findstring win,$(FTE_TARGET))$(findstring _SDL,$(FTE_TARGET)))
 
 	# Allow 32bit FTE to access beyond the 2GB address space
 	ifeq ($(FTE_TARGET),win32)
-		BASELDFLAGS=-Wl,--large-address-aware
+		BASELDFLAGS=
 	endif
 	#Note: for deterministic builds, the following line disables timestamps for import/export tables. This is UNSAFE if there are any PE files bound to the compiled PE file. Our plugin dlls are dynamically loaded so this should not be an issue for us.
 	BASELDFLAGS+=-Wl,--no-insert-timestamp
-	DEBUG_LDFLAGS=-Wl,--no-dynamicbase	#debug builds are useful for catching crashes. the resulting stack traces are not very useful if we don't even know what the base address should be.
+	DEBUG_LDFLAGS=	#debug builds are useful for catching crashes. the resulting stack traces are not very useful if we don't even know what the base address should be.
 	RELEASE_LDFLAGS=-Wl,--dynamicbase	#release builds should attempt to use aslr
 
 	BASELDFLAGS+=-lcomctl32

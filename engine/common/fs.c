@@ -3839,12 +3839,6 @@ qboolean FS_Restarted(unsigned int *since)
 	return false;
 }
 
-#ifdef __WIN32	//already assumed to be case insensitive. let the OS keep fixing up the paths itself.
-static void FS_FixupFileCase(char *out, size_t outsize, const char *basedir, const char *entry)
-{
-	Q_snprintfz(out, outsize, "%s%s", basedir, entry);
-}
-#else
 struct fixupcase_s
 {
 	char *out;
@@ -3899,7 +3893,6 @@ static qboolean FS_FixupFileCase(char *out, size_t outsize, const char *basedir,
 		Sys_EnumerateFiles(basedir, "*", FS_FixupFileCaseResult, &parm, NULL);
 	return true;
 }
-#endif
 
 /*
 ================
